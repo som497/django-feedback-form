@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundKraft Feedback Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 2rem;
+            color: gray;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+        .success-message {
+            display: none;
+            color: green;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card p-4 shadow-lg">
+            <h2 class="text-center text-primary">SoundKraft Feedback Form</h2>
+            
+            <form method="POST" id="feedback-form" action="{% url 'feedback_form' %}">
+                {% csrf_token %}
+
+                <!-- Date Display -->
+                <div class="mb-3">
+                    <label class="form-label">Date:</label>
+                    <input type="text" class="form-control" value="{{ date }}" readonly>
+                </div>
+
+                <!-- State Selection (Fixed Missing Field) -->
+                <div class="mb-3">
+                    <label for="state" class="form-label">Select Your State:</label>
+                    <select name="state" id="state" class="form-select" required>
+                        <option value="" disabled selected>Select State</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="hyderabad">Hyderabad</option>
+                        <option value="odisha">Odisha</option>
+                    </select>
+                </div>
+
+                <!-- Student Name -->
+                <div class="mb-3">
+                    <label for="student_name" class="form-label">Student Name:</label>
+                    <input type="text" name="student_name" id="student_name" class="form-control" required>
+                </div>
+
+                <!-- Trainer Name -->
+                <div class="mb-3">
+                    <label for="trainer_name" class="form-label">Trainer Name:</label>
+                    <input type="text" name="trainer_name" id="trainer_name" class="form-control" required>
+                </div>
+
+                <!-- Course -->
+                <div class="mb-3">
+                    <label for="course" class="form-label">Course:</label>
+                    <input type="text" name="course" id="course" class="form-control" required>
+                </div>
+
+                <!-- Slot Timings Dropdown -->
+                <div class="mb-3">
+                    <label for="slot_timings" class="form-label">Slot Timings:</label>
+                    <select name="slot_timings" id="slot_timings" class="form-select" required>
+                        <option value="morning">Morning</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                    </select>
+                </div>
+
+                <!-- Understanding Rating -->
+                <div class="mb-3">
+                    <label class="form-label">Understanding:</label>
+                    <div class="star-rating">
+                        <input type="radio" name="understanding" value="5" id="understanding5" required><label for="understanding5">&#9733;</label>
+                        <input type="radio" name="understanding" value="4" id="understanding4"><label for="understanding4">&#9733;</label>
+                        <input type="radio" name="understanding" value="3" id="understanding3"><label for="understanding3">&#9733;</label>
+                        <input type="radio" name="understanding" value="2" id="understanding2"><label for="understanding2">&#9733;</label>
+                        <input type="radio" name="understanding" value="1" id="understanding1"><label for="understanding1">&#9733;</label>
+                    </div>
+                </div>
+
+                <!-- Engagement Rating -->
+                <div class="mb-3">
+                    <label class="form-label">Engagement:</label>
+                    <div class="star-rating">
+                        <input type="radio" name="engagement" value="5" id="engagement5" required><label for="engagement5">&#9733;</label>
+                        <input type="radio" name="engagement" value="4" id="engagement4"><label for="engagement4">&#9733;</label>
+                        <input type="radio" name="engagement" value="3" id="engagement3"><label for="engagement3">&#9733;</label>
+                        <input type="radio" name="engagement" value="2" id="engagement2"><label for="engagement2">&#9733;</label>
+                        <input type="radio" name="engagement" value="1" id="engagement1"><label for="engagement1">&#9733;</label>
+                    </div>
+                </div>
+
+                <!-- Overall Experience Rating (Fixed Name) -->
+                <div class="mb-3">
+                    <label class="form-label">Overall Experience:</label>
+                    <div class="star-rating">
+                        <input type="radio" name="overall" value="5" id="overall5" required><label for="overall5">&#9733;</label>
+                        <input type="radio" name="overall" value="4" id="overall4"><label for="overall4">&#9733;</label>
+                        <input type="radio" name="overall" value="3" id="overall3"><label for="overall3">&#9733;</label>
+                        <input type="radio" name="overall" value="2" id="overall2"><label for="overall2">&#9733;</label>
+                        <input type="radio" name="overall" value="1" id="overall1"><label for="overall1">&#9733;</label>
+                    </div>
+                </div>
+
+                <!-- Homework -->
+                <div class="mb-3">
+                    <label for="homework" class="form-label">Homework:</label>
+                    <textarea name="homework" id="homework" class="form-control"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+
+                <!-- Success Message -->
+                <div id="success-message" class="success-message">
+                    ✅ Feedback Submitted Successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $("#feedback-form").submit(function() {
+            $("#success-message").fadeIn();
+        });
+    </script>
+</body>
+</html>
