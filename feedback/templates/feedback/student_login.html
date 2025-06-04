@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundKraft - Student Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #4a5568;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: #ed8936;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #a0aec0;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #ed8936;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(237, 137, 54, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(237, 137, 54, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(237, 137, 54, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .secondary-btn:hover {
+            border-color: #ed8936;
+            color: #ed8936;
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .time-display {
+            background: #edf2f7;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .time-display h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .current-time {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ed8936;
+            font-family: 'Courier New', monospace;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-note {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="floating-elements">
+                <div class="floating-note" style="top: 10%; left: 10%;">♪</div>
+                <div class="floating-note" style="top: 20%; right: 15%; animation-delay: -2s;">♫</div>
+                <div class="floating-note" style="bottom: 30%; left: 20%; animation-delay: -4s;">♬</div>
+                <div class="floating-note" style="bottom: 15%; right: 10%; animation-delay: -1s;">♩</div>
+            </div>
+            <div class="logo">
+                <div class="logo-icon">♪</div>
+                <div class="logo-text">SOUNDKRAFT</div>
+            </div>
+            <p class="subtitle">Student Login</p>
+        </div>
+
+        <div class="form-container">
+            <div class="welcome-message">
+                WELCOME
+            </div>
+
+            <!-- Current Time Display -->
+            <div class="time-display">
+                <h3>Current Time</h3>
+                <div class="current-time" id="currentTime"></div>
+            </div>
+
+            <!-- Error Messages -->
+            {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+            {% endif %}
+
+            <!-- Success Messages -->
+            {% if success_message %}
+                <div class="alert alert-success">{{ success_message }}</div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'student_login' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="student_name">Student Name</label>
+                    <input type="text" id="student_name" name="student_name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Select Date</label>
+                    <input type="date" id="date" name="date" value="{{ today_date }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="state">Select State</label>
+                    <select id="state" name="state" required>
+                        <option value="">Choose your state</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="hyderabad">Hyderabad</option>
+                        <option value="odisha">Odisha</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="login-btn">Save Login Data</button>
+            </form>
+                
+            <!-- Navigation Button to Feedback Form - OUTSIDE the form -->
+            <button type="button" class="secondary-btn" onclick="goToFeedback()">
+                Go to Feedback Form →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update current time every second
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Update time immediately and then every second
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Set maximum date to today
+        document.getElementById('date').setAttribute('max', new Date().toISOString().split('T')[0]);
+
+        // Function to navigate to feedback form
+        function goToFeedback() {
+            window.location.href = "{% url 'feedback_form' %}";
+        }
+    </script>
+</body>
+</html>

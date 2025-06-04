@@ -3,153 +3,577 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundKraft Feedback Form</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <title>SoundKraft - Course Feedback</title>
     <style>
-        .star-rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .star-rating input {
-            display: none;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
-        .star-rating label {
-            font-size: 2rem;
-            color: gray;
-            cursor: pointer;
-            transition: color 0.3s;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        .star-rating label:hover,
-        .star-rating label:hover ~ label,
-        .star-rating input:checked ~ label {
-            color: gold;
-        }
-        .success-message {
-            display: none;
-            color: green;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
+
+        .header {
+            background: #4a5568;
+            padding: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: #ed8936;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #a0aec0;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .navigation-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #ed8936;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-info h3 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .student-info p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            border-color: #ed8936;
+            color: #ed8936;
+            transform: translateY(-1px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+            min-height: 50px;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ed8936;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(237, 137, 54, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .rating-section {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .rating-section h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .rating-group {
+            margin-bottom: 20px;
+        }
+
+        .rating-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .rating-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .rating-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .rating-option:hover {
+            transform: scale(1.1);
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #718096;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .rating-option input[type="radio"]:checked + .rating-circle {
+            background: #ed8936;
+            border-color: #ed8936;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .rating-label {
+            font-size: 12px;
+            color: #718096;
+            text-align: center;
+        }
+
+        .parents-feedback-section {
+            background: #edf2f7;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #ed8936;
+        }
+
+        .parents-feedback-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .parents-feedback-section .icon {
+            font-size: 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(237, 137, 54, 0.3);
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(237, 137, 54, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-fadeout {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+
+            .navigation-section {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-note {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
         }
     </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card p-4 shadow-lg">
-            <h2 class="text-center text-primary">SoundKraft Feedback Form</h2>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="floating-elements">
+                <div class="floating-note" style="top: 10%; left: 10%;">♪</div>
+                <div class="floating-note" style="top: 20%; right: 15%; animation-delay: -2s;">♫</div>
+                <div class="floating-note" style="bottom: 30%; left: 20%; animation-delay: -4s;">♬</div>
+                <div class="floating-note" style="bottom: 15%; right: 10%; animation-delay: -1s;">♩</div>
+            </div>
+            <div class="logo">
+                <div class="logo-icon">♪</div>
+                <div class="logo-text">SOUNDKRAFT</div>
+            </div>
+            <p class="subtitle">Course Feedback Form</p>
+        </div>
+
+        <div class="form-container">
+            <!-- Navigation Section -->
+            <div class="navigation-section">
+                <div class="student-info">
+                    <h3>Independent Feedback Form</h3>
+                    <p>Fill out your course feedback details below</p>
+                </div>
+                <a href="{% url 'student_login' %}" class="nav-btn">
+                    ← Back to Student Login
+                </a>
+            </div>
+
+            <!-- Success/Error Messages -->
+            {% if success %}
+                <div class="alert alert-success" id="successAlert">✅ Feedback Submitted Successfully! Session #{{ session_number }}</div>
+            {% endif %}
             
-            <form method="POST" id="feedback-form" action="{% url 'feedback_form' %}">
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'feedback_form' %}">
                 {% csrf_token %}
 
                 <!-- Date Display -->
-                <div class="mb-3">
-                    <label class="form-label">Date:</label>
-                    <input type="text" class="form-control" value="{{ date }}" readonly>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" name="date" id="date" required style="font-size: 16px; padding: 15px 20px; height: auto;">
                 </div>
 
-                <!-- State Selection (Fixed Missing Field) -->
-                <div class="mb-3">
-                    <label for="state" class="form-label">Select Your State:</label>
-                    <select name="state" id="state" class="form-select" required>
-                        <option value="" disabled selected>Select State</option>
-                        <option value="bangalore">Bangalore</option>
-                        <option value="hyderabad">Hyderabad</option>
-                        <option value="odisha">Odisha</option>
-                    </select>
-                </div>
-
-                <!-- Student Name -->
-                <div class="mb-3">
-                    <label for="student_name" class="form-label">Student Name:</label>
-                    <input type="text" name="student_name" id="student_name" class="form-control" required>
-                </div>
-
-                <!-- Trainer Name -->
-                <div class="mb-3">
-                    <label for="trainer_name" class="form-label">Trainer Name:</label>
-                    <input type="text" name="trainer_name" id="trainer_name" class="form-control" required>
-                </div>
-
-                <!-- Course -->
-                <div class="mb-3">
-                    <label for="course" class="form-label">Course:</label>
-                    <input type="text" name="course" id="course" class="form-control" required>
-                </div>
-
-                <!-- Slot Timings Dropdown -->
-                <div class="mb-3">
-                    <label for="slot_timings" class="form-label">Slot Timings:</label>
-                    <select name="slot_timings" id="slot_timings" class="form-select" required>
-                        <option value="morning">Morning</option>
-                        <option value="afternoon">Afternoon</option>
-                        <option value="evening">Evening</option>
-                    </select>
-                </div>
-
-                <!-- Understanding Rating -->
-                <div class="mb-3">
-                    <label class="form-label">Understanding:</label>
-                    <div class="star-rating">
-                        <input type="radio" name="understanding" value="5" id="understanding5" required><label for="understanding5">&#9733;</label>
-                        <input type="radio" name="understanding" value="4" id="understanding4"><label for="understanding4">&#9733;</label>
-                        <input type="radio" name="understanding" value="3" id="understanding3"><label for="understanding3">&#9733;</label>
-                        <input type="radio" name="understanding" value="2" id="understanding2"><label for="understanding2">&#9733;</label>
-                        <input type="radio" name="understanding" value="1" id="understanding1"><label for="understanding1">&#9733;</label>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state" required>
+                            <option value="">Select State</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                            <option value="odisha">Odisha</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="slot_timings">Slot Timings</label>
+                        <select id="slot_timings" name="slot_timings" required>
+                            <option value="">Select Slot</option>
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- Engagement Rating -->
-                <div class="mb-3">
-                    <label class="form-label">Engagement:</label>
-                    <div class="star-rating">
-                        <input type="radio" name="engagement" value="5" id="engagement5" required><label for="engagement5">&#9733;</label>
-                        <input type="radio" name="engagement" value="4" id="engagement4"><label for="engagement4">&#9733;</label>
-                        <input type="radio" name="engagement" value="3" id="engagement3"><label for="engagement3">&#9733;</label>
-                        <input type="radio" name="engagement" value="2" id="engagement2"><label for="engagement2">&#9733;</label>
-                        <input type="radio" name="engagement" value="1" id="engagement1"><label for="engagement1">&#9733;</label>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="student_name">Student Name</label>
+                        <input type="text" id="student_name" name="student_name" placeholder="Enter student's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trainer_name">Trainer Name</label>
+                        <input type="text" id="trainer_name" name="trainer_name" placeholder="Enter trainer's name" required>
                     </div>
                 </div>
 
-                <!-- Overall Experience Rating (Fixed Name) -->
-                <div class="mb-3">
-                    <label class="form-label">Overall Experience:</label>
-                    <div class="star-rating">
-                        <input type="radio" name="overall" value="5" id="overall5" required><label for="overall5">&#9733;</label>
-                        <input type="radio" name="overall" value="4" id="overall4"><label for="overall4">&#9733;</label>
-                        <input type="radio" name="overall" value="3" id="overall3"><label for="overall3">&#9733;</label>
-                        <input type="radio" name="overall" value="2" id="overall2"><label for="overall2">&#9733;</label>
-                        <input type="radio" name="overall" value="1" id="overall1"><label for="overall1">&#9733;</label>
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" name="course" placeholder="Enter course name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="homework">Homework / Additional Comments</label>
+                    <textarea id="homework" name="homework" placeholder="Share any homework assignments or additional feedback..."></textarea>
+                </div>
+
+                <div class="rating-section">
+                    <h3>Rate Your Experience</h3>
+                    
+                    <div class="rating-group">
+                        <label>Understanding</label>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="understanding" value="1" id="understanding_1" required>
+                                <label for="understanding_1" class="rating-circle">1</label>
+                                <span class="rating-label">Poor</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="understanding" value="2" id="understanding_2">
+                                <label for="understanding_2" class="rating-circle">2</label>
+                                <span class="rating-label">Fair</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="understanding" value="3" id="understanding_3">
+                                <label for="understanding_3" class="rating-circle">3</label>
+                                <span class="rating-label">Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="understanding" value="4" id="understanding_4">
+                                <label for="understanding_4" class="rating-circle">4</label>
+                                <span class="rating-label">Very Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="understanding" value="5" id="understanding_5">
+                                <label for="understanding_5" class="rating-circle">5</label>
+                                <span class="rating-label">Excellent</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rating-group">
+                        <label>Engagement</label>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="engagement" value="1" id="engagement_1" required>
+                                <label for="engagement_1" class="rating-circle">1</label>
+                                <span class="rating-label">Poor</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="engagement" value="2" id="engagement_2">
+                                <label for="engagement_2" class="rating-circle">2</label>
+                                <span class="rating-label">Fair</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="engagement" value="3" id="engagement_3">
+                                <label for="engagement_3" class="rating-circle">3</label>
+                                <span class="rating-label">Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="engagement" value="4" id="engagement_4">
+                                <label for="engagement_4" class="rating-circle">4</label>
+                                <span class="rating-label">Very Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="engagement" value="5" id="engagement_5">
+                                <label for="engagement_5" class="rating-circle">5</label>
+                                <span class="rating-label">Excellent</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rating-group">
+                        <label>Overall Experience</label>
+                        <div class="rating-options">
+                            <div class="rating-option">
+                                <input type="radio" name="overall" value="1" id="overall_1" required>
+                                <label for="overall_1" class="rating-circle">1</label>
+                                <span class="rating-label">Poor</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="overall" value="2" id="overall_2">
+                                <label for="overall_2" class="rating-circle">2</label>
+                                <span class="rating-label">Fair</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="overall" value="3" id="overall_3">
+                                <label for="overall_3" class="rating-circle">3</label>
+                                <span class="rating-label">Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="overall" value="4" id="overall_4">
+                                <label for="overall_4" class="rating-circle">4</label>
+                                <span class="rating-label">Very Good</span>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" name="overall" value="5" id="overall_5">
+                                <label for="overall_5" class="rating-circle">5</label>
+                                <span class="rating-label">Excellent</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Homework -->
-                <div class="mb-3">
-                    <label for="homework" class="form-label">Homework:</label>
-                    <textarea name="homework" id="homework" class="form-control"></textarea>
+                <!-- Parents Feedback Section -->
+                <div class="parents-feedback-section">
+                    <h3><span class="icon">👨‍👩‍👧‍👦</span> Parents Feedback</h3>
+                    <div class="form-group">
+                        <label for="parents_feedback">Share your feedback about your child's progress and experience</label>
+                        <textarea id="parents_feedback" name="parents_feedback" placeholder="Dear parents, please share your observations about your child's musical journey, progress at home, practice habits, or any concerns you'd like to discuss..."></textarea>
+                    </div>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-
-                <!-- Success Message -->
-                <div id="success-message" class="success-message">
-                    ✅ Feedback Submitted Successfully!
-                </div>
+                <button type="submit" class="submit-btn">Submit Feedback</button>
             </form>
         </div>
     </div>
 
     <script>
-        $("#feedback-form").submit(function() {
-            $("#success-message").fadeIn();
+        // Set maximum date to today and default to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('max', today);
+            dateInput.value = today;
+        });
+
+        // Auto-hide success message after 3 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const successAlert = document.getElementById('successAlert');
+            
+            if (successAlert) {
+                // Start fade out after 3 seconds
+                setTimeout(function() {
+                    successAlert.classList.add('alert-fadeout');
+                    
+                    // Remove element from DOM after fade animation completes
+                    setTimeout(function() {
+                        successAlert.style.display = 'none';
+                    }, 500); // Match the CSS transition duration
+                }, 3000); // 3 seconds delay
+            }
         });
     </script>
 </body>
